@@ -1,0 +1,39 @@
+server:
+  port: 4501
+  base_url: "/v1"
+
+endpoints:
+  - path: "/customer-queries"
+    method: "POST"
+    response:
+      200:
+        body:
+          data:
+              id: 1234567890987654
+              name: "Joe"
+              lastname: "Blanck"
+              cashback: 120
+          self: "http://apis.iconn.com/customers/1234567890987654"
+      404:
+        body:
+          message: "Not Found"
+    headers:
+      - name: "Authorization"
+        required: true
+
+  - path: "/items/{item_id}"
+    method: "GET"
+    path_params:
+      - name: "item_id"
+        required: true
+    response:
+      200:
+        body:
+          id: "{item_id}"
+          name: "Item {item_id}"
+      404:
+        body:
+          message: "Item not found"
+    headers:
+      - name: "Authorization"
+        required: true
