@@ -22,38 +22,34 @@ base_url = config['server']['base_url']
 
 # Función para validar los headers
 def validate_headers(headers_config):
-    logging.debug("Validando headers")
     for header in headers_config:
         header_name = header['name']
         if header.get('required') and header_name not in request.headers:
-            logging.warning(f"Header {header_name} es requerido y no está presente")
+            logging.warning(f"Header {header_name} is required and not present")
             return jsonify({"error": f"Header {header_name} is required"}), 400
     return None
 
 # Función para validar los query params
 def validate_query_params(query_params_config):
-    logging.debug("Validando query params")
     for param in query_params_config:
         param_name = param['name']
         if param.get('required') and param_name not in request.args:
-            logging.warning(f"Query parameter {param_name} es requerido y no está presente")
+            logging.warning(f"Query parameter {param_name} is required and not present")
             return jsonify({"error": f"Query parameter {param_name} is required"}), 400
     return None
 
 # Función para validar los path params
 def validate_path_params(path_params_config):
-    logging.debug("Validando path params")
     for param in path_params_config:
         param_name = param['name']
         if param.get('required') and param_name not in request.view_args:
-            logging.warning(f"Path parameter {param_name} es requerido y no está presente")
+            logging.warning(f"Path parameter {param_name} is required and not present")
             return jsonify({"error": f"Path parameter {param_name} is required"}), 400
     return None
 
 # Función para obtener el código de respuesta desde los headers
 def get_response_code():
     response_code = int(request.headers.get('Response-Code', 200))
-    logging.debug(f"Código de respuesta obtenido: {response_code}")
     return response_code
 
 # Función para convertir la ruta del endpoint
@@ -63,7 +59,7 @@ def convert_path(path):
 # Función de fábrica para crear la función del endpoint
 def create_endpoint_func(endpoint):
     def endpoint_func(*args, **kwargs):
-        logging.debug(f"Procesando endpoint: {endpoint['path']} con método: {endpoint['method'].upper()}")
+        logging.debug(f"Process endpoint: {endpoint['path']} with method: {endpoint['method'].upper()}")
         
         # Validación de headers
         header_validation = validate_headers(endpoint.get('headers', []))
@@ -85,7 +81,7 @@ def create_endpoint_func(endpoint):
         
         # Responder con el código HTTP adecuado
         response = endpoint['response'].get(response_code, {}).get('body', {})
-        logging.debug(f"Respuesta generada: {response}")
+        logging.debug(f"Response: {response}")
         return jsonify(response)
     
     return endpoint_func
@@ -105,5 +101,5 @@ for endpoint in config['endpoints']:
 
 # Levantar el servidor
 if __name__ == '__main__':
-    logging.info(f"Iniciando servidor en el puerto {port}")
+    logging.info(f"Starting server at port {port}")
     app.run(debug=True, host='0.0.0.0', port=port)
