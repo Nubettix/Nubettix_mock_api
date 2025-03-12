@@ -27,7 +27,7 @@ jobs:
       run: pyinstaller --onefile mock_api.py
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: mock_api_exe
         path: dist/mock_api.exe
