@@ -107,7 +107,7 @@ server:
 
 Defines the endpoints of the Mock API. Each endpoint has several properties described below.
 
-- **path** (Required): The endpoint path. Example: /items, /items/{item_id}.
+- **path** (Required): The endpoint path. Example: /items, /items/<item_id>.
 - **method** (Required): The HTTP method of the endpoint. Can be one of the following: GET, POST, PUT, DELETE.
 - **query_params** (Optional): List of query parameters to be validated in the endpoint. Each parameter has:
   - `name`: The name of the parameter.
@@ -121,7 +121,7 @@ query_params:
 ```
 
 - **path_params** (Optional): List of path parameters. Each parameter has:
-  - `name`: The name of the parameter in the path (e.g., in /items/{item_id}, item_id is the parameter).
+  - `name`: The name of the parameter in the path (e.g., in /items/<item_id>, item_id is the parameter).
   - `required`: Boolean indicating if the parameter is required (true or false).
 
 Example:

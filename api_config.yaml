@@ -21,7 +21,7 @@ endpoints:
       - name: "Authorization"
         required: true
 
-  - path: "/items/{item_id}"
+  - path: "/items/<item_id>"
     method: "GET"
     path_params:
       - name: "item_id"
