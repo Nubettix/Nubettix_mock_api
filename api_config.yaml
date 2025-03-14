@@ -5,35 +5,367 @@ server:
 endpoints:
   - path: "/customer-queries"
     method: "POST"
+    default_response: 200
     response:
       200:
         body:
           data:
-              id: 1234567890987654
-              name: "Joe"
-              lastname: "Blanck"
-              cashback: 120
+            id: 1234567890987654
+            name: "Joe"
+            lastname: "Blanck"
+            cashback: 120
           self: "http://apis.iconn.com/customers/1234567890987654"
+      400:
+        body:
+          errors:
+            - code: "BAD_REQUEST_PHONE_NUMBER_INCORRECT_FORMAT"
+              incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+              message: "string"
+          self: "http://example.com"
+      401:
+        body:
+          errors:
+            - code: "UNAUTHORIZED_MISSING_TOKEN"
+              incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+              message: "string"
+          self: "http://example.com"
+      403:
+        body:
+          errors:
+            - code: "FORBIDDEN_MISSING_PERMISSIONS"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
       404:
         body:
-          message: "Not Found"
+          errors:
+            - code: "NOT_FOUND_CUSTOMER"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
+      429:
+        body:
+          errors:
+            - code: "TOO_MANY_REQUEST"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
+      500:
+        body:
+          errors:
+            - code: "INTERNAL_SERVER_ERROR"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
+      503:
+        body:
+          errors:
+            - code: "SERVICE_UNAVAILABLE"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
     headers:
       - name: "Authorization"
         required: true
-
-  - path: "/items/<item_id>"
-    method: "GET"
-    path_params:
-      - name: "item_id"
+      - name: "X-Request-ID"
         required: true
+
+  - path: "/customers/<customer_id>"
+    method: "GET"
     response:
       200:
         body:
-          id: "{item_id}"
-          name: "Item {item_id}"
+          data:
+            id: 1234567890987654
+            name: "Joe"
+            lastname: "Blanck"
+            cashback: 120
+          self: "http://apis.iconn.com/customers/1234567890987654"
+      400:
+        body:
+          errors:
+            - code: "BAD_REQUEST_CUSTOMER_ID_INCORRECT_FORMAT"
+              incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+              message: "string"
+          self: "http://example.com"
+      401:
+        body:
+          errors:
+            - code: "UNAUTHORIZED_MISSING_TOKEN"
+              incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+              message: "string"
+          self: "http://example.com"
+      403:
+        body:
+          errors:
+            - code: "FORBIDDEN_MISSING_PERMISSIONS"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
       404:
         body:
-          message: "Item not found"
+          errors:
+            - code: "NOT_FOUND_CUSTOMER"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
+      429:
+        body:
+          errors:
+            - code: "TOO_MANY_REQUEST"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
+      500:
+        body:
+          errors:
+            - code: "INTERNAL_SERVER_ERROR"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
+      503:
+        body:
+          errors:
+            - code: "SERVICE_UNAVAILABLE"
+              incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+              message: "string"
+          self: "http://example.com/customer-queries"
     headers:
       - name: "Authorization"
+        required: true
+      - name: "X-Request-ID"
+        required: true
+
+  - path: "/enrollments"
+    method: "POST"
+    response:
+      200:
+        body:
+          data:
+            enrollmentId: "883e2903-3e2f-407c-ae2a-1274a4137945"
+            status: "PENDING"
+          self: "http://example.com"
+      201:
+        body:
+          data:
+            enrollmentId: "883e2903-3e2f-407c-ae2a-1274a4137945"
+            status: "PENDING"
+          self: "string"
+      409:
+        body:
+          errors:
+            - code: "CONFLICT_ENROLLMENT_ALREADY_COMPLETED"
+              incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+              message: "string"
+          self: "http://example.com"
+        400:
+          body:
+            errors:
+              - code: "BAD_REQUEST_CUSTOMER_ID_INCORRECT_FORMAT"
+                incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+                message: "string"
+            self: "http://example.com"
+        401:
+          body:
+            errors:
+              - code: "UNAUTHORIZED_MISSING_TOKEN"
+                incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+                message: "string"
+            self: "http://example.com"
+        403:
+          body:
+            errors:
+              - code: "FORBIDDEN_MISSING_PERMISSIONS"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        404:
+          body:
+            errors:
+              - code: "NOT_FOUND_CUSTOMER"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        429:
+          body:
+            errors:
+              - code: "TOO_MANY_REQUEST"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        500:
+          body:
+            errors:
+              - code: "INTERNAL_SERVER_ERROR"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        503:
+          body:
+            errors:
+              - code: "SERVICE_UNAVAILABLE"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+    headers:
+      - name: "Authorization"
+        required: true
+      - name: "X-Request-ID"
+        required: true
+      - name: "X-Source-Type"
+        required: true
+
+  - path: "/connection-requests"
+    method: "POST"
+    response:
+      200:
+        body:
+          data:
+            connectionRequestId: "b87311ef-1599-4339-ad00-c392fd67a8d3"
+            enrollmentId: "883e2903-3e2f-407c-ae2a-1274a4137945"
+            timeLeft: -2147483648
+            attemptsThreshold: -2147483648
+            attemptsLeft: string
+          self: "http://example.com"
+      201:
+        body:
+          data:
+            enrollmentId: "883e2903-3e2f-407c-ae2a-1274a4137945"
+            status: "PENDING"
+          self: "string"
+      409:
+        body:
+          errors:
+            - code: "CONFLICT_ENROLLMENT_ALREADY_COMPLETED"
+              incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+              message: "string"
+          self: "http://example.com"
+        400:
+          body:
+            errors:
+              - code: "BAD_REQUEST_CUSTOMER_ID_INCORRECT_FORMAT"
+                incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+                message: "string"
+            self: "http://example.com"
+        401:
+          body:
+            errors:
+              - code: "UNAUTHORIZED_MISSING_TOKEN"
+                incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+                message: "string"
+            self: "http://example.com"
+        403:
+          body:
+            errors:
+              - code: "FORBIDDEN_MISSING_PERMISSIONS"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        404:
+          body:
+            errors:
+              - code: "NOT_FOUND_CUSTOMER"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        429:
+          body:
+            errors:
+              - code: "TOO_MANY_REQUEST"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        500:
+          body:
+            errors:
+              - code: "INTERNAL_SERVER_ERROR"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        503:
+          body:
+            errors:
+              - code: "SERVICE_UNAVAILABLE"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+    headers:
+      - name: "Authorization"
+        required: true
+      - name: "X-Request-ID"
+        required: true
+      - name: "X-Source-Type"
+        required: true
+
+  - path: "/connection-requests/<connection_request_id>/verifications"
+    method: "POST"
+    default_response: 204
+    path_params:
+      - name: "connection_request_id"
+        required: true
+    response:
+      204:
+        body:
+      409:
+        body:
+          errors:
+            - code: "CONFLICT_ENROLLMENT_ALREADY_COMPLETED"
+              incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+              message: "string"
+          self: "http://example.com"
+        400:
+          body:
+            errors:
+              - code: "BAD_REQUEST_OTP_INCORRECT_FORMAT"
+                incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+                message: "string"
+            self: "http://example.com"
+        401:
+          body:
+            errors:
+              - code: "UNAUTHORIZED_MISSING_TOKEN"
+                incidentId: "c7a5d545-e8ac-4e92-ab32-6a98dfe2572c"
+                message: "string"
+            self: "http://example.com"
+        403:
+          body:
+            errors:
+              - code: "FORBIDDEN_MISSING_PERMISSIONS"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        404:
+          body:
+            errors:
+              - code: "NOT_FOUND_CUSTOMER"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        429:
+          body:
+            errors:
+              - code: "TOO_MANY_REQUEST"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        500:
+          body:
+            errors:
+              - code: "INTERNAL_SERVER_ERROR"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+        503:
+          body:
+            errors:
+              - code: "SERVICE_UNAVAILABLE"
+                incidentId: "38e328f5-5d44-4754-9a45-b24d58850d02"
+                message: "string"
+            self: "http://example.com/customer-queries"
+    headers:
+      - name: "Authorization"
+        required: true
+      - name: "X-Request-ID"
+        required: true
+      - name: "X-Source-Type"
         required: true
