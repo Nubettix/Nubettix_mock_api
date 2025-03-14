@@ -32,6 +32,7 @@ With the virtual environment activated, run the following command to install Fla
 ```sh
 pip install Flask pyyaml
 pip install pyyaml flask
+pip install art
 ```
 
 ## Run the application
