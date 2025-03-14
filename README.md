@@ -76,8 +76,7 @@ endpoints:
     path_params:
       - name: <param_name>
         required: <boolean>
-    body:
-      <json_structure>
+    default_response: <status_code>
     response:
       <status_code>:
         body:
