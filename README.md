@@ -1,6 +1,12 @@
 # Nubettix_mock_api
 This project allows you to create and simulate mock APIs for integration testing.
 
+## Guide to Configure `api_config.yaml`
+
+For detailed instructions on creating a YAML configuration file for Nubettix Mock API, please refer to the following guide:
+
+[Guide to Creating a YAML Configuration for Nubettix Mock API](https://nubettix.com/en/guide-to-creating-a-yaml-configuration-for-nubettix-mock-api/)
+
 # Instructions to set up the virtual environment and dependencies
 
 ## Create a virtual environment
