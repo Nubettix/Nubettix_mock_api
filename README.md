@@ -34,6 +34,11 @@ pip install Flask pyyaml
 pip install pyyaml flask
 pip install art
 ```
+or 
+
+```sh
+pip install -r requirements.txt
+```
 
 ## Run the application
 
