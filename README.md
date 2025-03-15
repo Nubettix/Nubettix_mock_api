@@ -178,3 +178,30 @@ headers:
   - name: "Authorization"
     required: true
 ```
+
+### Docker
+
+#### Build the Docker Image
+
+To build the Docker image for the Nubettix Mock API, run the following command:
+
+```bash
+docker build -t nubettix-mock-api .
+```
+
+#### Run the Docker Container
+
+You can run the Docker container and pass the configuration file (`api_config.yaml`) from your local machine to the container using the following command:
+
+```bash
+docker run -p 4501:4501 -v $(pwd)/api_config.yaml:/app/api_config.yaml nubettix-mock-api
+```
+
+- **`-p 4501:4501`**: Maps port `4501` on your local machine to port `4501` in the container.
+- **`-v $(pwd)/api_config.yaml:/app/api_config.yaml`**: Mounts the local `api_config.yaml` file into the container at `/app/api_config.yaml`.
+
+This allows the container to use your local configuration file without needing to rebuild the image.
+
+#### Notes:
+- Ensure that the `api_config.yaml` file is in the current working directory when running the command.
+- If you want to include the configuration file directly in the Docker image, you can modify the `Dockerfile` to copy it during the build process (see the Dockerfile section for details).
