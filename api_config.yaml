@@ -3,6 +3,17 @@ server:
   base_url: "/v1"
 
 endpoints:
+  - path: "/customer"
+    query_params:
+      - name: "id"
+        required: true
+    method: "GET"
+    response:
+      200:
+        body:
+          data:
+            id: "{id}"
+            
   - path: "/customer-queries"
     method: "POST"
     default_response: 200
