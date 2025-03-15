@@ -51,12 +51,23 @@ def validate_path_params(path_params_config):
 # Function to get response code from headers
 def get_response_code(default_response):
     response_code = int(request.headers.get('Response-Code', default_response))
-    logging.debug(f"Response code obtained: {response_code}")
     return response_code
 
 # Function to convert endpoint path
 def convert_path(path):
     return path.replace("{", "<").replace("}", ">")
+
+# Function to replace placeholders in response body
+def replace_placeholders(response, query_params):
+    if isinstance(response, dict):
+        response = {key: replace_placeholders(value, query_params) for key, value in response.items()}
+    elif isinstance(response, list):
+        response = [replace_placeholders(item, query_params) for item in response]
+    elif isinstance(response, str):
+        for key, value in query_params.items():
+            placeholder = f"{{{key}}}"
+            response = response.replace(placeholder, value)
+    return response
 
 # Factory function to create endpoint function
 def create_endpoint_func(endpoint):
@@ -82,7 +93,11 @@ def create_endpoint_func(endpoint):
         response_code = get_response_code(endpoint.get('default_response',200))
         # Respond with the appropriate HTTP code
         response = endpoint['response'].get(response_code, {}).get('body', {})
-        logging.debug(f"Response: {response}")
+        
+        # Replace placeholders in the response body with query params
+        if isinstance(response, dict):
+            response = replace_placeholders(response, request.args)
+        
         return jsonify(response), response_code
     
     return endpoint_func
